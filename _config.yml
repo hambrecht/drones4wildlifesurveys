@@ -41,4 +41,3 @@ static_dir: assets
 
 # Path to the template file used for generating HTML pages
 layout: default.html
-```
