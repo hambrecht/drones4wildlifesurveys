@@ -6,7 +6,7 @@ title: Home
 | [Home](index.md) | [Simulations](sim.html) | [Deep Learning](dl.md) | [Field Work](fieldwork.html) | [IRSS](https://irsslab.forestry.ubc.ca/) | [fRI Research](https://friresearch.ca/) | [Contact](mailto:137965368+hambrecht@users.noreply.github.com) |
 
 
-# Project Overview
+## Project Overview
 
 This research is part of the [Moose Research Initiative](https://friresearch.ca/project/moose-research-initiative) and Theme 4 focuses on examining how historical and current forest management practices, along with conservation efforts aimed at species such as woodland caribou, impact moose populations and their habitat in Alberta. Additionally, there is a need to enhance monitoring techniques for moose in forested areas and evaluate the effects of climate change on moose populations and their habitat in the future. This report summarizes the progress achieved from June 1st to September 30th under the Moose Research Initiative (MRI), specifically highlighting Theme 4. Significant advancements have been made during this period aligning with the project’s objectives.
 
