@@ -1,0 +1,14 @@
+
+---
+title: "Interactive Map Example"
+output: html_document
+---
+
+## My Interactive Map
+
+```{r leaflet-map, echo=FALSE}
+library(leaflet)
+leaflet() %>%
+  addTiles() %>%
+  addMarkers(lng = -123.1, lat = 49.25, popup = "Vancouver")
+```
