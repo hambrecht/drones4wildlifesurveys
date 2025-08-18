@@ -3,7 +3,7 @@ layout: default
 title: Home
 ---
 
-[Home](index.md) | [Simulations](sim.html) | [Deep Learning](dl.md) | [Field Work](fieldwork.html) | [IRSS](https://irsslab.forestry.ubc.ca/) | [fRI Research](https://friresearch.ca/) | [Contact](mailto:137965368+hambrecht@users.noreply.github.com)
+| [Home](index.md) | [Simulations](sim.html) | [Deep Learning](dl.md) | [Field Work](fieldwork.html) | [IRSS](https://irsslab.forestry.ubc.ca/) | [fRI Research](https://friresearch.ca/) | [Contact](mailto:137965368+hambrecht@users.noreply.github.com) |
 
 
 # Project Overview
