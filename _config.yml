@@ -1,14 +1,14 @@
 # Default configuration for a HTML site
 
 # Site title and author
-title: My HTML Site
-author: John Doe
+title: Moose Research Initiative — Theme 4
+author: Leonard Hambrecht
 
 # Site URL
-url: http://example.com
+url: https://hambrecht.github.io/drones4wildlifesurveys/
 
 # Description of the site
-description: This is an example HTML site.
+description: Examining the current practicality and potential of Copter and Fixed Wing Remotely Piloted Airborne Systems for wildlife surveys, with comparisons of currently employed survey methods
 
 markdown: kramdown
 plugins:
@@ -23,11 +23,11 @@ nav:
   - title: Home
     url: /
   - title: Simulations
-    url: /sim/
+    url: /sim.md
   - title: Deep learning
     url: /dl/
   - title: Field work
-    url: /fieldwork
+    url: /fieldwork.html
   - title: About
     url: /about/
   - title: Contact
