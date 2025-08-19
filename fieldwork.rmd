@@ -12,14 +12,15 @@ output: html_document
 library(here)
 library(leaflet)
 library(sf)
+library(terra)
 library(dplyr)
 studyArea <- st_read("mapLayers/studyAreaOntario.shp")
-studyArea <- st_transform(studyArea, crs = 4326)  # WGS84
+studyArea <- st_transform(studyArea, crs = 4326) # WGS84
 strata <- st_read("mapLayers/strata.shp")
-strata <- st_transform(strata, crs = 4326)  # WGS84
+strata <- st_transform(strata, crs = 4326) # WGS84
 strata$name <- c("East", "1 Day", "West")
 aerodrome <- st_read("mapLayers/aerodrome.shp")
-aerodrome <- st_transform(aerodrome, crs = 4326)  # WGS84
+aerodrome <- st_transform(aerodrome, crs = 4326) # WGS84
 
 
 # Define a color palette based on the 'name' column
@@ -31,7 +32,12 @@ print(studyArea)
 ```{r leaflet-map, echo=FALSE}
 leaflet() %>%
   addTiles() %>%
-  # addMarkers(lng = -89.5, lat = 48.7, popup = "Dog Lake") %>%
+  addTiles(
+    "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png",
+    layerId = "_e5657323_f251_4d70_9366_f5879b155d3e",
+    group = "Terrain",
+    options = WMSTileOptions()
+  ) %>%
   addPolygons(
     data = studyArea,
     color = "red",
@@ -39,33 +45,33 @@ leaflet() %>%
     opacity = 1,
     fillOpacity = 0,
     group = "Study Area"
-  )%>%
+  ) %>%
   addLegend("bottomleft", col = "red", label = "Study Area", title = "Study area") %>%
-addPolygons(
-  data = strata,
-  color = ~ pal(name),
-  weight = 1,
-  opacity = 1,
-  fillOpacity = 0.4,
-  popup = ~name,
-  group = "Strata"
-) %>%
-addLegend(
-  "bottomleft", pal = pal, values = strata$name, title = "Strata")%>%
-addPolygons(
-  data = aerodrome,
-  color = "yellow",
-  weight = 1,
-  opacity = 1,
-  fillOpacity = 0.4,
-  popup = "AeroDrome: Two Island Lake",
-  group = "Aerodrome"
-) %>%
-
-addLayersControl(
-    overlayGroups = c("Study Area", "Strata", "Aerodrome"),
+  addPolygons(
+    data = strata,
+    color = ~ pal(name),
+    weight = 1,
+    opacity = 1,
+    fillOpacity = 0.4,
+    popup = ~name,
+    group = "Strata"
+  ) %>%
+  addLegend(
+    "bottomleft",
+    pal = pal, values = strata$name, title = "Strata"
+  ) %>%
+  addPolygons(
+    data = aerodrome,
+    color = "yellow",
+    weight = 1,
+    opacity = 1,
+    fillOpacity = 0.4,
+    popup = "AeroDrome: Two Island Lake",
+    group = "Aerodrome"
+  ) %>%
+  addLayersControl(
+    overlayGroups = c("Terrain", "Study Area", "Strata", "Aerodrome"),
     options = layersControlOptions(collapsed = FALSE)
-  )
-
-
+  ) %>%
+  hideGroup("Terrain")
 ```
