@@ -38,6 +38,12 @@ leaflet() %>%
     group = "Terrain",
     options = WMSTileOptions()
   ) %>%
+  addTiles(
+    "https://tile.opentopomap.org/{z}/{x}/{y}.png",
+    layerId = "_14b46c75_d6e7_481f_b57d_a0bbb927294a",
+    group = "Topo",
+    options = WMSTileOptions()
+  ) %>%
   addPolygons(
     data = studyArea,
     color = "red",
@@ -70,8 +76,8 @@ leaflet() %>%
     group = "Aerodrome"
   ) %>%
   addLayersControl(
-    overlayGroups = c("Terrain", "Study Area", "Strata", "Aerodrome"),
+    overlayGroups = c("Study Area", "Strata", "Aerodrome", "Terrain", "Topo"),
     options = layersControlOptions(collapsed = FALSE)
   ) %>%
-  hideGroup("Terrain")
+  hideGroup(c("Terrain", "Topo"))
 ```
