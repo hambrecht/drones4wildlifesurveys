@@ -43,6 +43,12 @@ leaflet() %>%
     group = "Topo",
     options = WMSTileOptions()
   ) %>%
+  addTiles(
+    "https://datacube.services.geo.ca/wrapper/ogc/elevation-hrdem-mosaic",
+    layerId = "Relief_map_of_the_Digital_Terrain_Model____________________Carte_de_relief_du_Mod_le_Num_rique_de_Terrain__139f2d65_7f2c_44b9_834a_01214bd59908",
+    group = "Relief",
+    options = WMSTileOptions()
+  ) %>%
   addPolygons(
     data = studyArea,
     color = "red",
@@ -75,8 +81,8 @@ leaflet() %>%
     group = "Aerodrome"
   ) %>%
   addLayersControl(
-    overlayGroups = c("Study Area", "Strata", "Aerodrome", "Terrain", "Topo"),
+    overlayGroups = c("Study Area", "Strata", "Aerodrome", "Relief", "Terrain", "Topo"),
     options = layersControlOptions(collapsed = FALSE)
   ) %>%
-  hideGroup(c("Terrain", "Topo"))
+  hideGroup(c("Relief", "Terrain", "Topo"))
 ```
