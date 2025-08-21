@@ -10,12 +10,12 @@ format: html
 ```{r include=FALSE}
 library(here)
 library(leaflet)
+library(leafem)
 library(sf)
 library(terra)
 library(dplyr)
 library(RColorBrewer)
-privateLandImage <- rast("mapLayers/images/privateLand.tif")
-privateLandImage <- RGB(privateLandImage, type = "RGB")
+privateLandImage <- rast("mapLayers/images/image003_WGS84.tif")
 studyArea <- st_read("mapLayers/studyAreaOntario.shp")
 studyArea <- st_transform(studyArea, crs = 4326) # WGS84
 surveyArea <- st_read("mapLayers/surveyArea.shp")
@@ -50,13 +50,13 @@ palElevation <- colorNumeric(
   domain = c(0, 600)  # Set min and max values
 )
 palGreen <- colorNumeric(
-  palette = brewer.pal(n = 10, name = "YlGn"),
+  palette = brewer.pal(n = 9, name = "YlGn"),
   domain = canopyCover$STRUCTUR_9
 )
 
 ```
 ```{r, include=FALSE}
-# plot(palGreen)
+plotRGB(privateLandImage, r = 1, g = 2, b = 3, stretch = "lin")
 ```
 ```{r leaflet-map, echo=FALSE}
 leaflet() %>%
@@ -87,11 +87,12 @@ leaflet() %>%
     attribution = "© Government of Ontario",
     group = "Base layer: Aerial Imagery"
   ) %>%
-  # addRasterImage(
-  #   privateLandImage,
-  #   color = "Spectral",
-  #   group = "Base layer: Private Land"
-  # )%>%
+  addRasterRGB(
+    privateLandImage,
+     r = 1, g = 2, b = 3,
+    # stretch = "lin", maxBytes = 5e+07,
+    group = "Base layer: Private Land"
+  )%>%
 # Areas
   addPolygons(
     data = studyArea,
@@ -210,6 +211,7 @@ leaflet() %>%
 ```
 
 ## Private land map
-<iframe src="https://www.lioapplications.lrc.gov.on.ca/CLUPA/index.html?viewer=CLUPA.CLUPA&locale=en-CA">
+
+[link](https://www.lioapplications.lrc.gov.on.ca/CLUPA/index.html?viewer=CLUPA.CLUPA&locale=en-CA)
 
 
