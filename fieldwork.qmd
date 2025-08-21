@@ -17,6 +17,8 @@ library(terra)
 library(dplyr)
 library(RColorBrewer)
 privateLandImage <- rast("mapLayers/images/image003_WGS84.tif")
+fracSnow <- rast("mapLayers/LC08_CU_020002_20250311_20250328_02_VIEWABLE_SNOW_CLIPPED_SCALED_SMALLEST.TIF")
+fracSnowTiles <- "mapLayers/snowTiles/{z}/{x}/{y}.jpg"
 studyArea <- st_read("mapLayers/studyAreaOntario.shp")
 studyArea <- st_transform(studyArea, crs = 4326) # WGS84
 surveyArea <- st_read("mapLayers/surveyArea.shp")
@@ -53,6 +55,11 @@ palElevation <- colorNumeric(
 palGreen <- colorNumeric(
   palette = brewer.pal(n = 9, name = "YlGn"),
   domain = canopyCover$STRUCTUR_9
+)
+palSnow <- colorNumeric(
+  palette = rev(brewer.pal(n = 9, name = "PuBu")),
+  domain = values(fracSnow),
+  na.color = "transparent"   # make NAs transparent
 )
 
 ```
@@ -157,7 +164,7 @@ leaflet() %>%
   ) %>%
   addCircles(
     data = recreationPoints,
-    radius = 2,
+    radius = 3,
     opacity = 1,
     fillOpacity = 1,
     color = "green",
@@ -166,7 +173,7 @@ leaflet() %>%
   ) %>%
   addCircles(
     data = towers,
-    radius = 4,
+    radius = 6,
     opacity = 1,
     fillOpacity = 1,
     color = "black",
@@ -200,15 +207,21 @@ leaflet() %>%
     popup = "Moose wintering area",
     group = "Enviroment: Moose wintering area"
   ) %>%
+  addRasterImage(
+    fracSnow,
+    colors = palSnow,
+    group = "Enviroment: Snow Cover",
+    addRasterImage
+  ) %>%
   
   addLegend("bottomleft", col = c("red", "green", "purple", "blue"), label = c("Survey area", "Provincal Park","Township", "Dog Lake"), title = "Area") %>%
   addLegend("bottomleft", col = c("yellow", "brown", "green", "red", "black"), label = c("Aerodrome: Two Island Lake", "Building", "Recreation point", "Tower", "Road"), title = "Infrastructure") %>%
-  addLegend("bottomleft", col = c(palGreen, "orange"), label = c("Canopy Cover", "Moose Wintering Area"), title = "Enviroment") %>%
+  addLegend("bottomleft", col = c(palGreen, "orange", palSnow), label = c("Canopy Cover", "Moose Wintering Area", "Fraction Snow Cover"), title = "Enviroment") %>%
   addLayersControl(
-    overlayGroups = c("Base layer: OpenTopo", "Base layer: Mapzen Global Terrain", "Base layer: Relief map of DTM", "Base layer: Aerial Imagery", "Base layer: Private Land", "Area:Survey Area", "Area:Provincal Park", "Area:Township", "Area:Lake", "Aerodrome", "Infrastructure: Buildings", "Infrastructure: Recreation points", "Infrastructure: Towers", "Infrastructure: Roads", "Enviroment: Canopy Cover","Enviroment: Moose wintering area"),
+    overlayGroups = c("Base layer: OpenTopo", "Base layer: Mapzen Global Terrain", "Base layer: Relief map of DTM", "Base layer: Aerial Imagery", "Base layer: Private Land", "Area:Survey Area", "Area:Provincal Park", "Area:Township", "Area:Lake", "Aerodrome", "Infrastructure: Buildings", "Infrastructure: Recreation points", "Infrastructure: Towers", "Infrastructure: Roads", "Enviroment: Canopy Cover","Enviroment: Moose wintering area", "Enviroment: Snow Cover"),
     options = layersControlOptions(collapsed = FALSE)
   ) %>%
-  hideGroup(c("Base layer: OpenTopo", "Base layer: Mapzen Global Terrain", "Base layer: Relief map of DTM", "Base layer: Aerial Imagery", "Base layer: Private Land", "Area:Provincal Park", "Area:Township", "Area:Lake", "Aerodrome", "Infrastructure: Buildings", "Infrastructure: Recreation points", "Infrastructure: Towers", "Infrastructure: Roads", "Enviroment: Canopy Cover","Enviroment: Moose wintering area"))
+  hideGroup(c("Base layer: OpenTopo", "Base layer: Mapzen Global Terrain", "Base layer: Relief map of DTM", "Base layer: Aerial Imagery", "Base layer: Private Land", "Area:Provincal Park", "Area:Township", "Area:Lake", "Aerodrome", "Infrastructure: Buildings", "Infrastructure: Recreation points", "Infrastructure: Towers", "Infrastructure: Roads", "Enviroment: Canopy Cover","Enviroment: Moose wintering area", "Enviroment: Snow Cover"))
 ```
 
 ## Private land map
